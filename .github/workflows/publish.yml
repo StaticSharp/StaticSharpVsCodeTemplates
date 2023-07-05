@@ -7,9 +7,8 @@ on:
     types: [staticsharp_core_updated]
   workflow_dispatch:
 jobs:
-  updateAndBuild:
-    name: Update template HelloStaticSharp and Build
-    permissions: write-all
+  updatePackage:
+    name: Update package in HelloStaticSharp
     runs-on: ubuntu-22.04
     if: github.event_name == 'repository_dispatch'
     steps:
@@ -40,13 +39,50 @@ jobs:
             echo "Failed!"
             exit 1
           fi;
-          
+
+      - name: Commit
+        run: |
+          git commit -a -m "StaticSharp.Core updated to version ${{ github.event.client_payload.package_version }}"
+
       - name: Build
         run: |    
           dotnet build ./ProjectTemplates/HelloStaticSharp/HelloStaticSharp.csproj
+      
+      - name: Trigger VsCode extension update
+        run: |
+          curl -L -i \
+          -X POST \
+          -H "Accept: application/vnd.github+json" \
+          -H "X-GitHub-Api-Version: 2022-11-28" \
+          -H "Authorization: Bearer ${{ secrets.PAT_REPOSITORY_DISPATCH }}" \
+          -d '{"event_type":"templates_updated" \
+          https://api.github.com/repos/StaticSharp/StaticSharpVsCodeExtension/dispatches
+  
+  updateTemplates:
+    name: Update HelloStaticSharp
+    runs-on: ubuntu-22.04
+    if: github.event_name == 'repository_dispatch'
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v1
+
+      - name: Build
+        run: |    
+          dotnet build ./ProjectTemplates/HelloStaticSharp/HelloStaticSharp.csproj
+      
+      - name: Trigger VsCode extension update
+        run: |
+          curl -L -i \
+          -X POST \
+          -H "Accept: application/vnd.github+json" \
+          -H "X-GitHub-Api-Version: 2022-11-28" \
+          -H "Authorization: Bearer ${{ secrets.PAT_REPOSITORY_DISPATCH }}" \
+          -d '{"event_type":"templates_updated" \
+          https://api.github.com/repos/StaticSharp/StaticSharpVsCodeExtension/dispatches
+  
   build:
-    name: Build
-    if: github.event_name != 'repository_dispatch'
+    name: Re-build HelloStaticSharp
+    if: github.event_name = 'workflow_dispatch'
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout repository
