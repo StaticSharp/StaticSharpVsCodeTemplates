@@ -1,0 +1,63 @@
+name: update StaticSharp.Core reference
+on:
+  push:
+    branches:
+      - main
+  repository_dispatch:
+    types: [staticsharp_core_updated]
+  workflow_dispatch:
+jobs:
+  updateAndBuild:
+    name: Update template HelloStaticSharp and Build
+    runs-on: ubuntu-22.04
+    if: github.event_name == 'repository_dispatch'
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v1
+
+      - name: Update StaticSharp.Core in HelloStaticSharp
+        run: |
+          echo "Target package version ${{ github.event.client_payload.package_version }}"
+          echo "Retrying until package is validated and ready..."
+          set +e #####disables exit on non-zero exit code (needed for retries)
+          retries=3000
+          while ((retries>0)); do 
+            echo "retries remaining: $retries"
+            dotnet nuget locals all --clear \
+            > /dev/null 2>&1
+            dotnet add ./ProjectTemplates/HelloStaticSharp/HelloStaticSharp.csproj package StaticSharp.Core \
+            --source https://api.nuget.org/v3/index.json \
+            --version ${{ github.event.client_payload.package_version }} \
+            > /dev/null 2>&1
+            if (($?==0)); then 
+                break;
+            fi; 
+            sleep 2; 
+            ((retries--))
+          done
+          if ((retries==0)); then
+            echo "Failed!"
+            exit 1
+          fi;
+          
+      - name: Build
+        run: |    
+          dotnet build ./ProjectTemplates/HelloStaticSharp/HelloStaticSharp.csproj
+  build:
+    name: Build
+    if: github.event_name != 'repository_dispatch'
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v1
+
+      - name: Update StaticSharp.Core in HelloStaticSharp to latest
+        run: |
+          dotnet nuget locals all --clear
+          dotnet add ./ProjectTemplates/HelloStaticSharp/HelloStaticSharp.csproj package StaticSharp.Core \
+            --source https://api.nuget.org/v3/index.json \
+
+      - name: Build
+        run: |    
+          dotnet build ./ProjectTemplates/HelloStaticSharp/HelloStaticSharp.csproj
+      
