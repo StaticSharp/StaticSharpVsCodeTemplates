@@ -9,6 +9,8 @@ on:
 jobs:
   updateAndBuild:
     name: Update template HelloStaticSharp and Build
+    permissions: 
+      actions: read&&write
     runs-on: ubuntu-22.04
     if: github.event_name == 'repository_dispatch'
     steps:
