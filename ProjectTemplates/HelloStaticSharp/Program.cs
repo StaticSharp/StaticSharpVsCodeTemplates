@@ -6,7 +6,7 @@ namespace HelloStaticSharp
 {
     internal class Program
     {
-        private static async Task Main(string[] args)123
+        private static async Task Main(string[] args)
         {
             switch (args.FirstOrDefault())
             {
