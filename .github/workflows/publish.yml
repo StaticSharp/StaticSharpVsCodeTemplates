@@ -43,6 +43,7 @@ jobs:
       - name: Commit
         run: |
           git commit -a -m "StaticSharp.Core updated to version ${{ github.event.client_payload.package_version }}"
+          git push
 
       - name: Build
         run: |    
