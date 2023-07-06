@@ -42,6 +42,8 @@ jobs:
 
       - name: Commit
         run: |
+          git config user.email "pavel.zybenkov@gmail.com"
+          git config user.name "Github actions"
           git commit -a -m "StaticSharp.Core updated to version ${{ github.event.client_payload.package_version }}"
           git push
 
