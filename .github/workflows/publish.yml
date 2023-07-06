@@ -13,7 +13,7 @@ jobs:
     if: github.event_name == 'repository_dispatch'
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v1
+        uses: actions/checkout@v3
 
       - name: Update StaticSharp.Core in HelloStaticSharp
         run: |
