@@ -1,15 +1,9 @@
-﻿using StaticSharp;
-using StaticSharp.Gears;
-using HelloStaticSharp.Root;
+﻿using DefaultStaticSharpProjectTemplate.Root;
 
-namespace HelloStaticSharp
-{
-    internal class Program
-    {
-        private static async Task Main(string[] args)
-        {
-            switch (args.FirstOrDefault())
-            {
+namespace DefaultStaticSharpProjectTemplate {
+    internal class Program {
+        private static async Task Main(string[] args) {
+            switch (args.FirstOrDefault()) {
                 case "s":
                     await Server();
                     break;
@@ -25,9 +19,8 @@ namespace HelloStaticSharp
             Console.WriteLine(args.Length);
         }
 
-        public static async Task Server()
-        {
-            Cache.RootDirectory = Static.MakeAbsolutePath(".cache");
+        public static async Task Server() {
+            Cache.Directory = MakeAbsolutePath(".cache");
 
             await new StaticSharp.Server(
                 new DefaultMultilanguagePageFinder<Language>((language) => new αRoot(language)),
@@ -35,16 +28,15 @@ namespace HelloStaticSharp
                 ).RunAsync();
         }
 
-        public static async Task Generator()
-        {
-            Cache.RootDirectory = Static.MakeAbsolutePath(".cache");
+        public static async Task Generator() {
+            Cache.Directory = MakeAbsolutePath(".cache");
 
             var projectPath = ProjectDirectory.Path;
             var baseDirectory = Path.GetFullPath(Path.Combine(projectPath, "GeneratedSite"));
 
             var generator = new MultilanguageStaticGenerator<Language>(
                 new DefaultMultilanguageNodeToPath<Language>(),
-                new AbsoluteUrl("http", "localhost"),
+                new AbsoluteUrl("http", "DefaultStaticSharpProjectTemplate.com"),
                 FilePath.FromOsPath(baseDirectory)
                 );
 

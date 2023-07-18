@@ -1,11 +1,9 @@
 ﻿using StaticSharp;
 
-namespace HelloStaticSharp.Root
-{
+namespace DefaultStaticSharpProjectTemplate.Root {
     [Representative]
-    public partial class Root : PageBase
-    {
-        public override string Title => "HelloStaticSharp - Home page";
+    public partial class Root : PageBase {
+        public override string Title => "DefaultStaticSharpProjectTemplate - Home page";
 
         public override Inlines? Description => "Home page of StaticSharp sample project";
 

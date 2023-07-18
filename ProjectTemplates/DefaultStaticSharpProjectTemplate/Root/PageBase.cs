@@ -1,15 +1,13 @@
 using StaticSharp;
 using StaticSharp.Gears;
 
-namespace HelloStaticSharp.Root
-{
+namespace DefaultStaticSharpProjectTemplate.Root {
     /// <summary>
     /// Base page for a site. Can be used to define common layout patterns, styles and metadata.
     /// This page is useful but not mandatory, it is possible to inherit pages directly from StaticSharp.Page
     /// </summary>
-    public abstract partial class PageBase : Page
-    {
-        public override string? SiteName => "HelloStaticSharp";
+    public abstract partial class PageBase : Page {
+        public override string? SiteName => "DefaultStaticSharpProjectTemplate";
 
         /// <summary>
         /// Language for <html lang="...">
@@ -28,8 +26,8 @@ namespace HelloStaticSharp.Root
         /// Content, Header, Footer, Menu, etc, which are declared as abstract in a base page 
         /// and defined in exact pages
         /// </summary>
-        public override Blocks UnmanagedChildren => new() 
-        { 
+        public override Blocks UnmanagedChildren => new()
+        {
             new LinearLayout {
                 Children = {
                     new Paragraph(Title)
@@ -41,6 +39,6 @@ namespace HelloStaticSharp.Root
             }
         };
 
-        public abstract Blocks Content {get;}
+        public abstract Blocks Content { get; }
     }
 }
