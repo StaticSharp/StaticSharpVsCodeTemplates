@@ -8,14 +8,14 @@ on:
   workflow_dispatch:
 jobs:
   updatePackage:
-    name: Update package in HelloStaticSharp
+    name: Update package in DefaultStaticSharpProjectTemplate
     runs-on: ubuntu-22.04
     if: github.event_name == 'repository_dispatch'
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Update StaticSharp.Core in HelloStaticSharp
+      - name: Update StaticSharp.Core in DefaultStaticSharpProjectTemplate
         run: |
           echo "Target package version ${{ github.event.client_payload.package_version }}"
           echo "Retrying until package is validated and ready..."
@@ -25,7 +25,7 @@ jobs:
             echo "retries remaining: $retries"
             dotnet nuget locals all --clear \
             > /dev/null 2>&1
-            dotnet add ./ProjectTemplates/HelloStaticSharp/HelloStaticSharp.csproj package StaticSharp.Core \
+            dotnet add ./ProjectTemplates/DefaultStaticSharpProjectTemplate/DefaultStaticSharpProjectTemplate.csproj package StaticSharp.Core \
             --source https://api.nuget.org/v3/index.json \
             --version ${{ github.event.client_payload.package_version }} \
             > /dev/null 2>&1
@@ -49,7 +49,7 @@ jobs:
 
       - name: Build
         run: |    
-          dotnet build ./ProjectTemplates/HelloStaticSharp/HelloStaticSharp.csproj
+          dotnet build ./ProjectTemplates/DefaultStaticSharpProjectTemplate/DefaultStaticSharpProjectTemplate.csproj
       
       - name: Trigger VsCode extension update
         run: |
@@ -62,7 +62,7 @@ jobs:
           https://api.github.com/repos/StaticSharp/StaticSharpVsCodeExtension/dispatches
   
   updateTemplates:
-    name: Update HelloStaticSharp
+    name: Update DefaultStaticSharpProjectTemplate
     runs-on: ubuntu-22.04
     if: github.event_name == 'push'
     steps:
@@ -71,7 +71,7 @@ jobs:
 
       - name: Build
         run: |    
-          dotnet build ./ProjectTemplates/HelloStaticSharp/HelloStaticSharp.csproj
+          dotnet build ./ProjectTemplates/DefaultStaticSharpProjectTemplate/DefaultStaticSharpProjectTemplate.csproj
       
       - name: Trigger VsCode extension update
         run: |
@@ -84,20 +84,20 @@ jobs:
           https://api.github.com/repos/StaticSharp/StaticSharpVsCodeExtension/dispatches
   
   build:
-    name: Re-build HelloStaticSharp
+    name: Re-build DefaultStaticSharpProjectTemplate
     if: github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout repository
         uses: actions/checkout@v1
 
-      - name: Update StaticSharp.Core in HelloStaticSharp to latest
+      - name: Update StaticSharp.Core in DefaultStaticSharpProjectTemplate to latest
         run: |
           dotnet nuget locals all --clear
-          dotnet add ./ProjectTemplates/HelloStaticSharp/HelloStaticSharp.csproj package StaticSharp.Core \
+          dotnet add ./ProjectTemplates/DefaultStaticSharpProjectTemplate/DefaultStaticSharpProjectTemplate.csproj package StaticSharp.Core \
             --source https://api.nuget.org/v3/index.json \
 
       - name: Build
         run: |    
-          dotnet build ./ProjectTemplates/HelloStaticSharp/HelloStaticSharp.csproj
+          dotnet build ./ProjectTemplates/DefaultStaticSharpProjectTemplate/DefaultStaticSharpProjectTemplate.csproj
       
