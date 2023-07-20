@@ -2,7 +2,7 @@
 
 namespace HelloStaticSharp.Root
 {
-    [Representative]
+
     public partial class Root : PageBase
     {
         public override string Title => "HelloStaticSharp - Home page";
