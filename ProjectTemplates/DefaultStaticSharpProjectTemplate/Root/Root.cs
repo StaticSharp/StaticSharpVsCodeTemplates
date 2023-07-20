@@ -1,7 +1,7 @@
 ﻿using StaticSharp;
 
 namespace DefaultStaticSharpProjectTemplate.Root {
-    [Representative]
+
     public partial class Root : PageBase {
         public override string Title => "DefaultStaticSharpProjectTemplate - Home page";
 
