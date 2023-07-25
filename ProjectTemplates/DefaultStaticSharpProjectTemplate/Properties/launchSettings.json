@@ -10,7 +10,7 @@
       "commandName": "Project",
       "environmentVariables": {
         "targetHostName": "DefaultStaticSharpProjectTemplate.com",
-        "outputDirectory": "../../DefaultStaticSharpProjectTemplate.com",
+        "outputDirectory": "./DefaultStaticSharpProjectTemplate.com",
         "entryPoint": "Generator"
       }
     }
