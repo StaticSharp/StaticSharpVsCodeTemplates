@@ -1,4 +1,3 @@
-using StaticSharp;
 using StaticSharp.Gears;
 
 namespace DefaultStaticSharpProjectTemplate.Root {

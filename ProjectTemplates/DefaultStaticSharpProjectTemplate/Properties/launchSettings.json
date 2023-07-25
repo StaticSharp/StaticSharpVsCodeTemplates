@@ -2,11 +2,17 @@
   "profiles": {
     "Server": {
       "commandName": "Project",
-      "commandLineArgs": "s"
+      "environmentVariables": {
+        "entryPoint": "Server"
+      }
     },
     "Generator": {
       "commandName": "Project",
-      "commandLineArgs": "g"
+      "environmentVariables": {
+        "targetHostName": "DefaultStaticSharpProjectTemplate.com",
+        "outputDirectory": "../../DefaultStaticSharpProjectTemplate.com",
+        "entryPoint": "Generator"
+      }
     }
   }
 }

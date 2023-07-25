@@ -1,6 +1,4 @@
-﻿using StaticSharp;
-
-namespace DefaultStaticSharpProjectTemplate.Root {
+﻿namespace DefaultStaticSharpProjectTemplate.Root {
 
     public partial class Root : PageBase {
         public override string Title => "DefaultStaticSharpProjectTemplate - Home page";

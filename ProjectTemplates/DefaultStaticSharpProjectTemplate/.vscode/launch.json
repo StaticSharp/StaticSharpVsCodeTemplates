@@ -10,6 +10,12 @@
             "request": "launch",
             "preLaunchTask": "build",
             "program": "dotnet",
+            "serverReadyAction":{
+                "action": "openExternally",
+                //"action": "debugWithChrome",
+                "pattern": "\\b(https?://\\S+)",
+                //"killOnServerStop": true
+            },
             "args": [
                 "watch",
                 "run",
