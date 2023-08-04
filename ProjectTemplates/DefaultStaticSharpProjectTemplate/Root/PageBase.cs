@@ -13,7 +13,7 @@ namespace DefaultStaticSharpProjectTemplate.Root {
         /// Could be defined once per whole site in a base page, if your site supports single language,
         /// or it could be overriden per page to match particular page language
         /// </summary>
-        public override string PageLanguage => "en-us";
+        public override string PageLanguage => Node.Language.ToString().ToLower();
 
         public override Genome<IAsset>? Favicon => Static.LoadFile("FavIcon.svg");
 
