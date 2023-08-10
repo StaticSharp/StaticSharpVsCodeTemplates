@@ -8,6 +8,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="StaticSharp.Core" Version="0.1.109" />
+    <PackageReference Include="StaticSharp.Core" Version="0.1.110" />
   </ItemGroup>
 </Project>
